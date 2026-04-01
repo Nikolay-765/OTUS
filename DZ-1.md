@@ -21,7 +21,7 @@ root@server:/home/user# uname -r
 6.8.0-101-generic
 ```
 В качестве нового выбрал ядро v6.19
-Загрузил необходимые deb пакеты на ностовую машину и с помощью scp закинул их на VM
+Загрузил необходимые deb пакеты на хостовую машину и с помощью scp закинул их на VM
 ```
 scp ./linux*.deb user@192.168.0.25:~/newcore_v6.19
 user@192.168.0.25's password:
@@ -30,5 +30,10 @@ linux-headers-6.19.0-061900_6.19.0-061900.202602082231_all.deb                  
 linux-image-unsigned-6.19.0-061900-generic_6.19.0-061900.202602082231_amd64.deb       100%   17MB 159.0MB/s   00:00
 linux-modules-6.19.0-061900-generic_6.19.0-061900.202602082231_amd64.deb              100%  160MB 209.5MB/s   00:00
 ```
-
+далее на VM
+```
+cd /home/user/newcore_v6.19/
+dpkg -i *.deb
+update-grub
+```
 
