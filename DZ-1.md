@@ -20,7 +20,7 @@ LOGO=ubuntu-logo
 root@server:/home/user# uname -r
 6.8.0-101-generic
 ```
-В качестве нового выбрал ядро v6.19
+В качестве нового, выбрал ядро v6.19\
 Загрузил необходимые deb пакеты на хостовую машину и с помощью scp закинул их на VM
 ```
 scp ./linux*.deb user@192.168.0.25:~/newcore_v6.19
@@ -35,7 +35,7 @@ linux-modules-6.19.0-061900-generic_6.19.0-061900.202602082231_amd64.deb        
 cd /home/user/newcore_v6.19/
 dpkg -i *.deb
 ```
-для удобства в /etc/default/grub параметр GRUB_TIMEOUT изменил на 3 (задержка перед загрузкой 3 сек.)
+для удобства в /etc/default/grub параметр GRUB_TIMEOUT изменил на 3 (задержка перед загрузкой 3 сек.)\
 далее
 ```
 update-grub
