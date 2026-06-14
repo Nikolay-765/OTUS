@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
+
+Vagrant.configure("2") do |config|
+
+   config.vm.box = "bento/ubuntu-24.04"
+   config.vm.define "web-server"
+   config.vm.hostname = "server"
+   config.vm.box_check_update = false
+
+   config.vm.disk :disk, size: "1GB", name: "new_disk1"
+   config.vm.disk :disk, size: "1GB", name: "new_disk2"
+
+   config.vm.provider "virtualbox" do |vb|
+      vb.name = "MegaServer"
+      vb.gui = false
+      vb.cpus = "1" 
+      vb.memory = "1024"       
+   end
+
+   config.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh", host_ip: "127.0.0.1"
+   config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
+   config.vm.synced_folder ".", "/vagrant", disabled: true
+   config.vm.synced_folder "./www-data", "/var/www/html"
+
+   config.vm.provision "ansible" do |ansible|
+     ansible.become = "true"
+     ansible.verbose = "v"
+     ansible.playbook = "Provisioning/playbook.yml"
+   end
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
+
+end
