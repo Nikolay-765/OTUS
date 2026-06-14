@@ -1,0 +1,39 @@
+---
+- name: MAIN | Sytem configuration
+  hosts: web-server
+  gather_facts: yes
+  become: yes
+  
+  tasks:
+  - name: "System upgrade"
+    ansible.builtin.apt:
+      upgrade: safe
+      update_cache: yes
+    tags: 
+      - system_upgrade
+
+  - name: "Software installation"
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - apache2
+      - proxychains4
+    tags:
+      - software_installation
+
+  - name: Gather facts about system
+    setup:
+
+  - name: "Looking for disks" # (Size 1 GB and without UUID - disk clear, no partitions and filesystems)"
+    include_tasks: disk_prepare.yml
+    loop: "{{ ansible_devices | dict2items }}"
+    when:
+      - item.value.size == "1.00 GB"
+      - item.value.links.uuids | length == 0
+
+  - name: "Print disk`s name"
+    ansible.builtin.debug:
+      msg: "Finish !!!"
+

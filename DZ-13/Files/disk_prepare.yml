@@ -1,0 +1,35 @@
+      - name: "Take disk`s name"
+        ansible.builtin.set_fact:
+          target_disk: "{{ item.key }}"
+          disk_device: "/dev/{{ item.key }}"
+          mount_point: "/mnt/disk_{{ item.key }}"
+
+      - name: "Print disk`s name"
+        ansible.builtin.debug:
+          msg: "Disk found: {{ disk_device }}, UUID: {{ item.value.links.uuids }}"
+
+      - name: "Make mounting point"
+        ansible.builtin.file:
+          path: "/mnt/disk_{{ mount_point }}"
+          state: directory
+          owner: root
+          group: root
+          mode: '0755'
+
+      - name: "Formatind disk to ext4"
+        ansible.builtin.filesystem:
+          fstype: ext4
+          dev: "{{ disk_device }}"
+
+      - name: "Update hardware informations"
+        ansible.builtin.setup:
+          gather_subset:
+            - hardware
+
+      - name: "Mounting disk and add information in /etc/fstab"
+        ansible.builtin.mount:
+          path: "{{ mount_point }}"
+          src: "UUID={{ ansible_facts['devices'][target_disk]['links']['uuids'][0] }}"
+          fstype: ext4
+          opts: defaults
+          state: mounted
