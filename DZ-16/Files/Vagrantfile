@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
+
+Vagrant.configure("2") do |config|
+
+   config.vm.box = "bento/ubuntu-24.04"
+   config.vm.define "server-pam"
+   config.vm.hostname = "server"
+   config.vm.box_check_update = false
+
+   config.vm.provider "virtualbox" do |vb|
+      vb.name = "Server-PAM"
+      vb.gui = false
+      vb.cpus = "1" 
+      vb.memory = "1024"       
+   end
+
+   config.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh", host_ip: "127.0.0.1"
+
+   config.vm.synced_folder ".", "/vagrant", disabled: true
+   config.vm.synced_folder "./script", "/usr/local/bin/script"
+
+   config.vm.provision "shell", inline: <<-SHELL
+      /usr/local/bin/script/pam-config.sh
+   SHELL
+
+end
