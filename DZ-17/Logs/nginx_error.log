@@ -1,0 +1,3 @@
+2026-07-19T15:37:42+00:00 web-server nginx_error: 2026/07/19 15:37:42 [error] 701#701: *6 directory index of "/var/www/html/" is forbidden, client: 192.168.60.1, server: _, request: "GET / HTTP/1.1", host: "192.168.60.150"
+2026-07-19T15:37:44+00:00 web-server nginx_error: 2026/07/19 15:37:44 [error] 701#701: *6 directory index of "/var/www/html/" is forbidden, client: 192.168.60.1, server: _, request: "GET / HTTP/1.1", host: "192.168.60.150"
+2026-07-19T15:37:52+00:00 web-server nginx_error: 2026/07/19 15:37:52 [error] 701#701: *7 directory index of "/var/www/html/" is forbidden, client: 192.168.60.160, server: _, request: "GET / HTTP/1.1", host: "192.168.60.150"
