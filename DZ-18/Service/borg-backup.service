@@ -1,0 +1,19 @@
+[Unit]
+Description=Borg Backup
+
+[Service]
+Type=oneshot
+
+Environment="BORG_PASSPHRASE=qwerty"
+Environment="REPO=/var/backup/"
+Environment="BACKUP_TARGET=root@192.168.60.160:/etc"
+Environment="BACKUP_NAME=192.168.60.160-etc"
+
+# Make backup
+ExecStart=/bin/bash /usr/local/bin/make_backup.sh ${BACKUP_TARGET} ${BACKUP_NAME} ${REPO}
+
+# Check backup
+ExecStart=/bin/borg check ${REPO}
+
+# Remove old backups
+ExecStart=/bin/borg prune --keep-daily 90 --keep-monthly 12 --keep-yearly 1 ${REPO}
