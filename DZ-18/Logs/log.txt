@@ -1,0 +1,256 @@
+Jul 22 11:17:38 backup systemd[1]: Started borg-backup.timer - Borg Backup.
+Jul 22 11:19:29 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 11:19:29 backup bash[3586]: Target: root@192.168.60.160:/etc
+Jul 22 11:19:29 backup bash[3586]: BackUpName: 192.168.60.160-etc
+Jul 22 11:19:29 backup bash[3586]: Repo: /var/backup/
+Jul 22 11:19:30 backup bash[3593]: ------------------------------------------------------------------------------
+Jul 22 11:19:30 backup bash[3593]: Repository: /var/backup
+Jul 22 11:19:30 backup bash[3593]: Archive name: 192.168.60.160-etc-2026-07-22_11:19:29
+Jul 22 11:19:30 backup bash[3593]: Archive fingerprint: 5b40fbb555d1841f0e86c75f1d978456d370e9f5efc88c156fd1a1240de03b92
+Jul 22 11:19:30 backup bash[3593]: Time (start): Wed, 2026-07-22 11:19:30
+Jul 22 11:19:30 backup bash[3593]: Time (end):   Wed, 2026-07-22 11:19:30
+Jul 22 11:19:30 backup bash[3593]: Duration: 0.66 seconds
+Jul 22 11:19:30 backup bash[3593]: Number of files: 859
+Jul 22 11:19:30 backup bash[3593]: Utilization of max. archive size: 0%
+Jul 22 11:19:30 backup bash[3593]: ------------------------------------------------------------------------------
+Jul 22 11:19:30 backup bash[3593]:                        Original size      Compressed size    Deduplicated size
+Jul 22 11:19:30 backup bash[3593]: This archive:                2.32 MB              1.04 MB                715 B
+Jul 22 11:19:30 backup bash[3593]: All archives:                6.97 MB              3.11 MB              1.19 MB
+Jul 22 11:19:30 backup bash[3593]:                        Unique chunks         Total chunks
+Jul 22 11:19:30 backup bash[3593]: Chunk index:                     819                 2545
+Jul 22 11:19:30 backup bash[3593]: ------------------------------------------------------------------------------
+Jul 22 11:19:30 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 11:19:31 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 11:19:31 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 11:19:31 backup systemd[1]: borg-backup.service: Consumed 1.032s CPU time.
+Jul 22 11:20:33 backup systemd[1]: Starting sysstat-collect.service - system activity accounting tool...
+Jul 22 11:20:33 backup systemd[1]: sysstat-collect.service: Deactivated successfully.
+Jul 22 11:20:33 backup systemd[1]: Finished sysstat-collect.service - system activity accounting tool.
+Jul 22 11:24:29 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 11:24:29 backup bash[3617]: Target: root@192.168.60.160:/etc
+Jul 22 11:24:29 backup bash[3617]: BackUpName: 192.168.60.160-etc
+Jul 22 11:24:29 backup bash[3617]: Repo: /var/backup/
+Jul 22 11:24:30 backup bash[3626]: ------------------------------------------------------------------------------
+Jul 22 11:24:30 backup bash[3626]: Repository: /var/backup
+Jul 22 11:24:30 backup bash[3626]: Archive name: 192.168.60.160-etc-2026-07-22_11:24:29
+Jul 22 11:24:30 backup bash[3626]: Archive fingerprint: fce6dee5daa945c7779026eb541da86f51e51299f0ce410953228e526c5bf8e4
+Jul 22 11:24:30 backup bash[3626]: Time (start): Wed, 2026-07-22 11:24:30
+Jul 22 11:24:30 backup bash[3626]: Time (end):   Wed, 2026-07-22 11:24:30
+Jul 22 11:24:30 backup bash[3626]: Duration: 0.66 seconds
+Jul 22 11:24:30 backup bash[3626]: Number of files: 859
+Jul 22 11:24:30 backup bash[3626]: Utilization of max. archive size: 0%
+Jul 22 11:24:30 backup bash[3626]: ------------------------------------------------------------------------------
+Jul 22 11:24:30 backup bash[3626]:                        Original size      Compressed size    Deduplicated size
+Jul 22 11:24:30 backup bash[3626]: This archive:                2.32 MB              1.04 MB                715 B
+Jul 22 11:24:30 backup bash[3626]: All archives:                6.97 MB              3.11 MB              1.15 MB
+Jul 22 11:24:30 backup bash[3626]:                        Unique chunks         Total chunks
+Jul 22 11:24:30 backup bash[3626]: Chunk index:                     817                 2546
+Jul 22 11:24:30 backup bash[3626]: ------------------------------------------------------------------------------
+Jul 22 11:24:30 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 11:24:31 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 11:24:31 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 11:24:31 backup systemd[1]: borg-backup.service: Consumed 1.030s CPU time.
+Jul 22 11:30:29 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 11:30:29 backup bash[3646]: Target: root@192.168.60.160:/etc
+Jul 22 11:30:29 backup bash[3646]: BackUpName: 192.168.60.160-etc
+Jul 22 11:30:29 backup bash[3646]: Repo: /var/backup/
+Jul 22 11:30:29 backup systemd[1]: Starting sysstat-collect.service - system activity accounting tool...
+Jul 22 11:30:29 backup systemd[1]: sysstat-collect.service: Deactivated successfully.
+Jul 22 11:30:29 backup systemd[1]: Finished sysstat-collect.service - system activity accounting tool.
+Jul 22 11:30:30 backup bash[3659]: ------------------------------------------------------------------------------
+Jul 22 11:30:30 backup bash[3659]: Repository: /var/backup
+Jul 22 11:30:30 backup bash[3659]: Archive name: 192.168.60.160-etc-2026-07-22_11:30:29
+Jul 22 11:30:30 backup bash[3659]: Archive fingerprint: 3ee188e99897945748539ec2916973226d611eafeaeb380e9055fa2937f056fd
+Jul 22 11:30:30 backup bash[3659]: Time (start): Wed, 2026-07-22 11:30:29
+Jul 22 11:30:30 backup bash[3659]: Time (end):   Wed, 2026-07-22 11:30:30
+Jul 22 11:30:30 backup bash[3659]: Duration: 0.62 seconds
+Jul 22 11:30:30 backup bash[3659]: Number of files: 859
+Jul 22 11:30:30 backup bash[3659]: Utilization of max. archive size: 0%
+Jul 22 11:30:30 backup bash[3659]: ------------------------------------------------------------------------------
+Jul 22 11:30:30 backup bash[3659]:                        Original size      Compressed size    Deduplicated size
+Jul 22 11:30:30 backup bash[3659]: This archive:                2.32 MB              1.04 MB                715 B
+Jul 22 11:30:30 backup bash[3659]: All archives:                6.97 MB              3.11 MB              1.15 MB
+Jul 22 11:30:30 backup bash[3659]:                        Unique chunks         Total chunks
+Jul 22 11:30:30 backup bash[3659]: Chunk index:                     817                 2546
+Jul 22 11:30:30 backup bash[3659]: ------------------------------------------------------------------------------
+Jul 22 11:30:30 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 11:30:31 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 11:30:31 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 11:30:31 backup systemd[1]: borg-backup.service: Consumed 1.044s CPU time.
+Jul 22 11:36:29 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 11:36:29 backup bash[3677]: Target: root@192.168.60.160:/etc
+Jul 22 11:36:29 backup bash[3677]: BackUpName: 192.168.60.160-etc
+Jul 22 11:36:29 backup bash[3677]: Repo: /var/backup/
+Jul 22 11:36:30 backup bash[3686]: ------------------------------------------------------------------------------
+Jul 22 11:36:30 backup bash[3686]: Repository: /var/backup
+Jul 22 11:36:30 backup bash[3686]: Archive name: 192.168.60.160-etc-2026-07-22_11:36:29
+Jul 22 11:36:30 backup bash[3686]: Archive fingerprint: 84ba04599544fda1aad1d215ed866698ed369bda90f4b50b96fec5ae6165e1ac
+Jul 22 11:36:30 backup bash[3686]: Time (start): Wed, 2026-07-22 11:36:30
+Jul 22 11:36:30 backup bash[3686]: Time (end):   Wed, 2026-07-22 11:36:30
+Jul 22 11:36:30 backup bash[3686]: Duration: 0.70 seconds
+Jul 22 11:36:30 backup bash[3686]: Number of files: 859
+Jul 22 11:36:30 backup bash[3686]: Utilization of max. archive size: 0%
+Jul 22 11:36:30 backup bash[3686]: ------------------------------------------------------------------------------
+Jul 22 11:36:30 backup bash[3686]:                        Original size      Compressed size    Deduplicated size
+Jul 22 11:36:30 backup bash[3686]: This archive:                2.32 MB              1.04 MB                715 B
+Jul 22 11:36:30 backup bash[3686]: All archives:                6.97 MB              3.11 MB              1.15 MB
+Jul 22 11:36:30 backup bash[3686]:                        Unique chunks         Total chunks
+Jul 22 11:36:30 backup bash[3686]: Chunk index:                     817                 2546
+Jul 22 11:36:30 backup bash[3686]: ------------------------------------------------------------------------------
+Jul 22 11:36:30 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 11:36:31 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 11:36:31 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 11:36:31 backup systemd[1]: borg-backup.service: Consumed 1.135s CPU time.
+Jul 22 11:40:06 backup systemd[1]: Starting sysstat-collect.service - system activity accounting tool...
+Jul 22 11:40:06 backup systemd[1]: sysstat-collect.service: Deactivated successfully.
+Jul 22 11:40:06 backup systemd[1]: Finished sysstat-collect.service - system activity accounting tool.
+Jul 22 11:42:19 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 11:42:19 backup bash[3705]: Target: root@192.168.60.160:/etc
+Jul 22 11:42:19 backup bash[3705]: BackUpName: 192.168.60.160-etc
+Jul 22 11:42:19 backup bash[3705]: Repo: /var/backup/
+Jul 22 11:42:20 backup bash[3714]: ------------------------------------------------------------------------------
+Jul 22 11:42:20 backup bash[3714]: Repository: /var/backup
+Jul 22 11:42:20 backup bash[3714]: Archive name: 192.168.60.160-etc-2026-07-22_11:42:19
+Jul 22 11:42:20 backup bash[3714]: Archive fingerprint: 45b6c8111199df422f1fb00090d8802a0215674bc48d6f715e75a9765fd910ad
+Jul 22 11:42:20 backup bash[3714]: Time (start): Wed, 2026-07-22 11:42:20
+Jul 22 11:42:20 backup bash[3714]: Time (end):   Wed, 2026-07-22 11:42:20
+Jul 22 11:42:20 backup bash[3714]: Duration: 0.69 seconds
+Jul 22 11:42:20 backup bash[3714]: Number of files: 859
+Jul 22 11:42:20 backup bash[3714]: Utilization of max. archive size: 0%
+Jul 22 11:42:20 backup bash[3714]: ------------------------------------------------------------------------------
+Jul 22 11:42:20 backup bash[3714]:                        Original size      Compressed size    Deduplicated size
+Jul 22 11:42:20 backup bash[3714]: This archive:                2.32 MB              1.04 MB                715 B
+Jul 22 11:42:20 backup bash[3714]: All archives:                6.97 MB              3.11 MB              1.15 MB
+Jul 22 11:42:20 backup bash[3714]:                        Unique chunks         Total chunks
+Jul 22 11:42:20 backup bash[3714]: Chunk index:                     817                 2546
+Jul 22 11:42:20 backup bash[3714]: ------------------------------------------------------------------------------
+Jul 22 11:42:20 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 11:42:21 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 11:42:21 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 11:42:21 backup systemd[1]: borg-backup.service: Consumed 1.107s CPU time.
+Jul 22 11:47:29 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 11:47:29 backup bash[3731]: Target: root@192.168.60.160:/etc
+Jul 22 11:47:29 backup bash[3731]: BackUpName: 192.168.60.160-etc
+Jul 22 11:47:29 backup bash[3731]: Repo: /var/backup/
+Jul 22 11:47:30 backup bash[3740]: ------------------------------------------------------------------------------
+Jul 22 11:47:30 backup bash[3740]: Repository: /var/backup
+Jul 22 11:47:30 backup bash[3740]: Archive name: 192.168.60.160-etc-2026-07-22_11:47:30
+Jul 22 11:47:30 backup bash[3740]: Archive fingerprint: e7f3823547f2c566ff8f61a834ee1e5e50dd9ff47aea73505e10ad08ac42ae00
+Jul 22 11:47:30 backup bash[3740]: Time (start): Wed, 2026-07-22 11:47:30
+Jul 22 11:47:30 backup bash[3740]: Time (end):   Wed, 2026-07-22 11:47:30
+Jul 22 11:47:30 backup bash[3740]: Duration: 0.65 seconds
+Jul 22 11:47:30 backup bash[3740]: Number of files: 859
+Jul 22 11:47:30 backup bash[3740]: Utilization of max. archive size: 0%
+Jul 22 11:47:30 backup bash[3740]: ------------------------------------------------------------------------------
+Jul 22 11:47:30 backup bash[3740]:                        Original size      Compressed size    Deduplicated size
+Jul 22 11:47:30 backup bash[3740]: This archive:                2.32 MB              1.04 MB                713 B
+Jul 22 11:47:30 backup bash[3740]: All archives:                6.97 MB              3.11 MB              1.15 MB
+Jul 22 11:47:30 backup bash[3740]:                        Unique chunks         Total chunks
+Jul 22 11:47:30 backup bash[3740]: Chunk index:                     817                 2546
+Jul 22 11:47:30 backup bash[3740]: ------------------------------------------------------------------------------
+Jul 22 11:47:30 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 11:47:31 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 11:47:31 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 11:47:31 backup systemd[1]: borg-backup.service: Consumed 1.097s CPU time.
+Jul 22 11:50:09 backup systemd[1]: Starting sysstat-collect.service - system activity accounting tool...
+Jul 22 11:50:09 backup systemd[1]: sysstat-collect.service: Deactivated successfully.
+Jul 22 11:50:09 backup systemd[1]: Finished sysstat-collect.service - system activity accounting tool.
+Jul 22 11:53:09 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 11:53:09 backup bash[3759]: Target: root@192.168.60.160:/etc
+Jul 22 11:53:09 backup bash[3759]: BackUpName: 192.168.60.160-etc
+Jul 22 11:53:09 backup bash[3759]: Repo: /var/backup/
+Jul 22 11:53:10 backup bash[3768]: ------------------------------------------------------------------------------
+Jul 22 11:53:10 backup bash[3768]: Repository: /var/backup
+Jul 22 11:53:10 backup bash[3768]: Archive name: 192.168.60.160-etc-2026-07-22_11:53:10
+Jul 22 11:53:10 backup bash[3768]: Archive fingerprint: 4cc5de060d1317b6ebd390aa0103c2a73d1d388719afd955598dd3c4cad5bb85
+Jul 22 11:53:10 backup bash[3768]: Time (start): Wed, 2026-07-22 11:53:10
+Jul 22 11:53:10 backup bash[3768]: Time (end):   Wed, 2026-07-22 11:53:10
+Jul 22 11:53:10 backup bash[3768]: Duration: 0.70 seconds
+Jul 22 11:53:10 backup bash[3768]: Number of files: 859
+Jul 22 11:53:10 backup bash[3768]: Utilization of max. archive size: 0%
+Jul 22 11:53:10 backup bash[3768]: ------------------------------------------------------------------------------
+Jul 22 11:53:10 backup bash[3768]:                        Original size      Compressed size    Deduplicated size
+Jul 22 11:53:10 backup bash[3768]: This archive:                2.32 MB              1.04 MB                713 B
+Jul 22 11:53:10 backup bash[3768]: All archives:                6.97 MB              3.11 MB              1.15 MB
+Jul 22 11:53:10 backup bash[3768]:                        Unique chunks         Total chunks
+Jul 22 11:53:10 backup bash[3768]: Chunk index:                     817                 2546
+Jul 22 11:53:10 backup bash[3768]: ------------------------------------------------------------------------------
+Jul 22 11:53:10 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 11:53:11 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 11:53:11 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 11:53:11 backup systemd[1]: borg-backup.service: Consumed 1.117s CPU time.
+Jul 22 11:58:29 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 11:58:29 backup bash[3791]: Target: root@192.168.60.160:/etc
+Jul 22 11:58:29 backup bash[3791]: BackUpName: 192.168.60.160-etc
+Jul 22 11:58:29 backup bash[3791]: Repo: /var/backup/
+Jul 22 11:58:30 backup bash[3800]: ------------------------------------------------------------------------------
+Jul 22 11:58:30 backup bash[3800]: Repository: /var/backup
+Jul 22 11:58:30 backup bash[3800]: Archive name: 192.168.60.160-etc-2026-07-22_11:58:29
+Jul 22 11:58:30 backup bash[3800]: Archive fingerprint: 0c27344e86f40bc32259dc9e4cf5ac47f72d94869363abac0b6f5dc9d3bef96f
+Jul 22 11:58:30 backup bash[3800]: Time (start): Wed, 2026-07-22 11:58:30
+Jul 22 11:58:30 backup bash[3800]: Time (end):   Wed, 2026-07-22 11:58:30
+Jul 22 11:58:30 backup bash[3800]: Duration: 0.61 seconds
+Jul 22 11:58:30 backup bash[3800]: Number of files: 859
+Jul 22 11:58:30 backup bash[3800]: Utilization of max. archive size: 0%
+Jul 22 11:58:30 backup bash[3800]: ------------------------------------------------------------------------------
+Jul 22 11:58:30 backup bash[3800]:                        Original size      Compressed size    Deduplicated size
+Jul 22 11:58:30 backup bash[3800]: This archive:                2.32 MB              1.04 MB                715 B
+Jul 22 11:58:30 backup bash[3800]: All archives:                6.97 MB              3.11 MB              1.15 MB
+Jul 22 11:58:30 backup bash[3800]:                        Unique chunks         Total chunks
+Jul 22 11:58:30 backup bash[3800]: Chunk index:                     817                 2546
+Jul 22 11:58:30 backup bash[3800]: ------------------------------------------------------------------------------
+Jul 22 11:58:30 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 11:58:31 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 11:58:31 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 11:58:31 backup systemd[1]: borg-backup.service: Consumed 1.094s CPU time.
+Jul 22 12:00:29 backup systemd[1]: Starting sysstat-collect.service - system activity accounting tool...
+Jul 22 12:00:29 backup systemd[1]: sysstat-collect.service: Deactivated successfully.
+Jul 22 12:00:29 backup systemd[1]: Finished sysstat-collect.service - system activity accounting tool.
+Jul 22 12:03:29 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 12:03:29 backup bash[3834]: Target: root@192.168.60.160:/etc
+Jul 22 12:03:29 backup bash[3834]: BackUpName: 192.168.60.160-etc
+Jul 22 12:03:29 backup bash[3834]: Repo: /var/backup/
+Jul 22 12:03:30 backup bash[3843]: ------------------------------------------------------------------------------
+Jul 22 12:03:30 backup bash[3843]: Repository: /var/backup
+Jul 22 12:03:30 backup bash[3843]: Archive name: 192.168.60.160-etc-2026-07-22_12:03:29
+Jul 22 12:03:30 backup bash[3843]: Archive fingerprint: e9333b6ef2a8459e71f95921cc0493eea1c0942b8f83f817443f1c4f7ac926e0
+Jul 22 12:03:30 backup bash[3843]: Time (start): Wed, 2026-07-22 12:03:30
+Jul 22 12:03:30 backup bash[3843]: Time (end):   Wed, 2026-07-22 12:03:30
+Jul 22 12:03:30 backup bash[3843]: Duration: 0.66 seconds
+Jul 22 12:03:30 backup bash[3843]: Number of files: 861
+Jul 22 12:03:30 backup bash[3843]: Utilization of max. archive size: 0%
+Jul 22 12:03:30 backup bash[3843]: ------------------------------------------------------------------------------
+Jul 22 12:03:30 backup bash[3843]:                        Original size      Compressed size    Deduplicated size
+Jul 22 12:03:30 backup bash[3843]: This archive:                2.32 MB              1.04 MB                831 B
+Jul 22 12:03:30 backup bash[3843]: All archives:                6.97 MB              3.11 MB              1.21 MB
+Jul 22 12:03:30 backup bash[3843]:                        Unique chunks         Total chunks
+Jul 22 12:03:30 backup bash[3843]: Chunk index:                     821                 2548
+Jul 22 12:03:30 backup bash[3843]: ------------------------------------------------------------------------------
+Jul 22 12:03:30 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 12:03:31 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 12:03:31 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 12:03:31 backup systemd[1]: borg-backup.service: Consumed 1.053s CPU time.
+Jul 22 12:09:29 backup systemd[1]: Starting borg-backup.service - Borg Backup...
+Jul 22 12:09:29 backup bash[3881]: Target: root@192.168.60.160:/etc
+Jul 22 12:09:29 backup bash[3881]: BackUpName: 192.168.60.160-etc
+Jul 22 12:09:29 backup bash[3881]: Repo: /var/backup/
+Jul 22 12:09:30 backup bash[3890]: ------------------------------------------------------------------------------
+Jul 22 12:09:30 backup bash[3890]: Repository: /var/backup
+Jul 22 12:09:30 backup bash[3890]: Archive name: 192.168.60.160-etc-2026-07-22_12:09:29
+Jul 22 12:09:30 backup bash[3890]: Archive fingerprint: c4c2eb04b476bd58a96d2b538e7ac1ddddd98d8adfba9d50623314bd6f720a7e
+Jul 22 12:09:30 backup bash[3890]: Time (start): Wed, 2026-07-22 12:09:30
+Jul 22 12:09:30 backup bash[3890]: Time (end):   Wed, 2026-07-22 12:09:30
+Jul 22 12:09:30 backup bash[3890]: Duration: 0.56 seconds
+Jul 22 12:09:30 backup bash[3890]: Number of files: 861
+Jul 22 12:09:30 backup bash[3890]: Utilization of max. archive size: 0%
+Jul 22 12:09:30 backup bash[3890]: ------------------------------------------------------------------------------
+Jul 22 12:09:30 backup bash[3890]:                        Original size      Compressed size    Deduplicated size
+Jul 22 12:09:30 backup bash[3890]: This archive:                2.32 MB              1.04 MB                715 B
+Jul 22 12:09:30 backup bash[3890]: All archives:                6.97 MB              3.11 MB              1.15 MB
+Jul 22 12:09:30 backup bash[3890]:                        Unique chunks         Total chunks
+Jul 22 12:09:30 backup bash[3890]: Chunk index:                     819                 2550
+Jul 22 12:09:30 backup bash[3890]: ------------------------------------------------------------------------------
+Jul 22 12:09:30 backup systemd[1]: mnt-backup_remote_dir.mount: Deactivated successfully.
+Jul 22 12:09:31 backup systemd[1]: borg-backup.service: Deactivated successfully.
+Jul 22 12:09:31 backup systemd[1]: Finished borg-backup.service - Borg Backup.
+Jul 22 12:09:31 backup systemd[1]: borg-backup.service: Consumed 1.009s CPU time.
