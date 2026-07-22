@@ -1,0 +1,44 @@
+---
+- name: MAIN | Sytem configuration
+  hosts: backup
+  gather_facts: yes
+  become: yes
+  
+  tasks:
+  - name: "System upgrade"
+    ansible.builtin.apt:
+      upgrade: safe
+      update_cache: yes
+    tags: 
+      - system_upgrade
+
+  - name: "Software installation"
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - borgbackup
+      - sshfs
+    tags:
+      - software_installation
+
+  - name: "Set dir for mounting point"
+    ansible.builtin.set_fact:
+      mount_point: "/var/backup"
+
+  - name: "Make mounting point if it is not exist"
+    ansible.builtin.file:
+      path: "{{ mount_point }}"
+      state: directory
+#      owner: borg
+#      group: borg
+      mode: '0700'
+
+  - name: "Looking for disks (Size 2 GB and without UUID - disk clear, no partitions and filesystems)"
+    include_tasks: disk_prepare.yml
+    loop: "{{ ansible_devices | dict2items }}"
+    when:
+      - item.value.size == "2.00 GB"
+      - item.value.links.uuids is not defined or item.value.links.uuids | length == 0
+    run_once: true

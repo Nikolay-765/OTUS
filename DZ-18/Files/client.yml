@@ -1,0 +1,28 @@
+---
+- name: MAIN | Sytem configuration
+  hosts: client
+  gather_facts: yes
+  become: yes
+  
+  tasks:
+  - name: "System upgrade"
+    ansible.builtin.apt:
+      upgrade: safe
+      update_cache: yes
+    tags: 
+      - system_upgrade
+
+  - name: "Software installation"
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - borgbackup
+    tags:
+      - software_installation
+
+  - name: "Print disk`s name"
+    ansible.builtin.debug:
+      msg: "Finish !!!"
+
