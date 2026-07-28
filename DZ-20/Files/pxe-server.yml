@@ -1,0 +1,24 @@
+---
+- name: MAIN | Sytem configuration
+  hosts: pxe
+  gather_facts: yes
+  become: yes
+  
+  tasks:
+  - name: "System upgrade"
+    ansible.builtin.apt:
+      upgrade: safe
+      update_cache: yes
+    tags: 
+      - system_upgrade
+
+  - name: "Software installation"
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - dnsmasq
+      - apache2
+    tags:
+      - software_installation

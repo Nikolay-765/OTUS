@@ -1,0 +1,76 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
+
+Vagrant.configure("2") do |config|
+
+   # Make VM PXE Server
+   config.vm.define "pxe" do |pxe|
+      pxe.vm.box = "bento/ubuntu-24.04"
+      pxe.vm.hostname = "pxe-server"
+      pxe.vm.box_check_update = false
+
+      pxe.vm.provider "virtualbox" do |vb|
+         vb.name = "ServerPXE"
+         vb.gui = false
+         vb.cpus = "2" 
+         vb.memory = "2048"       
+      end
+
+      pxe.vm.network "forwarded_port", guest: 22, host: 2201, id: "ssh", host_ip: "127.0.0.1"
+      pxe.vm.network "private_network", virtualbox__intnet: "internal", ip: "192.168.60.150", adapter: 2, netmask: "255.255.255.0"
+
+      pxe.vm.synced_folder ".", "/vagrant", disabled: true
+
+      pxe.vm.provision "ansible" do |ansible|
+         ansible.become = "true"
+         ansible.verbose = "v"
+         ansible.playbook = "Provisioning/pxe-server.yml"
+      end
+
+      pxe.vm.provision "shell", path: "./Script/PXE_serv_conf.sh"
+
+      # pxe.vm.provision "shell", inline: <<-SHELL
+      #   apt-get update
+      #   apt-get install -y apache2
+      # SHELL
+   end
+
+   # Make VM Client
+   config.vm.define "client" do |client|
+      client.vm.box = "bento/ubuntu-24.04"
+      client.vm.hostname = "client"
+      client.vm.box_check_update = false
+
+      client.vm.provider "virtualbox" do |vb|
+         vb.name = "ClientPXE"
+         vb.gui = true
+         vb.cpus = "2" 
+         vb.memory = "8192" 
+         vb.customize [
+            'modifyvm', :id, 
+            '--firmware', 'efi'
+         ]
+      end
+
+      client.vm.network "forwarded_port", guest: 22, host: 2202, id: "ssh", host_ip: "127.0.0.1"
+      client.vm.network "private_network", virtualbox__intnet: "internal", auto_config: false
+
+      client.vm.boot_timeout = 1 
+ 
+     # client.vm.synced_folder ".", "/vagrant", disabled: true
+
+     # client.vm.provision "ansible" do |ansible|
+     #   ansible.become = "true"
+     #   ansible.verbose = "v"
+     #   ansible.playbook = "Provisioning/client.yml"
+     # end
+
+     # client.vm.provision "shell", inline: <<-SHELL
+     #   apt-get update
+     #   apt-get install -y apache2
+     # SHELL
+   end
+
+end
