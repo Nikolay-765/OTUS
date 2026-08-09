@@ -1,0 +1,29 @@
+---
+- name: MAIN | Sytem configuration
+  hosts: all
+  gather_facts: yes
+  become: yes
+  
+  tasks:
+  - name: "System update"
+    ansible.builtin.apt:
+      update_cache: yes
+    tags: 
+      - system_update
+
+  - name: "Software installation"
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - nmap
+      - traceroute
+    tags:
+      - software_installation
+
+  - name: Copy script to VM and make it executable
+    ansible.builtin.copy:
+      src: ../Scripts/ssh_connection.sh
+      dest: /usr/local/bin/ssh_connection.sh
+      mode: '0755'

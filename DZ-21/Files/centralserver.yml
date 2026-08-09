@@ -1,0 +1,23 @@
+---
+- name: MAIN | Sytem configuration
+  hosts: all
+  gather_facts: yes
+  become: yes
+  
+  tasks:
+  - name: "System update"
+    ansible.builtin.apt:
+      update_cache: yes
+    tags: 
+      - system_update
+
+  - name: "Software installation"
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - nginx
+      - traceroute
+    tags:
+      - software_installation
