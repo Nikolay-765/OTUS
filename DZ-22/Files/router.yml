@@ -1,0 +1,70 @@
+---
+- name: MAIN | Routers configuration
+  hosts: all
+  gather_facts: yes
+  become: yes
+
+  tasks:
+  - name: Set up IPv4 forwarding
+    sysctl:
+      name: net.ipv4.conf.all.forwarding
+      value: '1'
+      state: present
+
+  - name: Set up asynchronous routing
+    sysctl:
+      name: net.ipv4.conf.all.rp_filter
+      value: '0'
+      state: present
+
+  - name: Add gpg frrouting.org
+    apt_key:
+      url: "https://deb.frrouting.org/frr/keys.asc"
+      state: present
+
+  - name: Add FRR repo
+    apt_repository:
+      repo: 'deb https://deb.frrouting.org/frr {{ ansible_facts["distribution_release"] }} frr-stable'
+      state: present
+  
+  - name: "Software installation"
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - frr
+      - frr-pythontools
+      - traceroute
+      - tcpdump
+      update_cache: yes
+    tags:
+      - software_installation
+
+  - name: "Configutation file frr.conf"
+    ansible.builtin.copy:
+      src: "../FRR_conf/{{ inventory_hostname }}.conf"  
+      dest: "/etc/frr/frr.conf"
+      owner: frr
+      group: frr
+      mode: '0640'
+    tags:
+      - frr_conf
+
+  - name: "Configutation file daemons"
+    ansible.builtin.lineinfile:
+      path: "/etc/frr/daemons"
+      regexp: 'ospfd=no'
+      line: 'ospfd=yes'
+      state: present
+    tags:
+      - frr_conf
+
+  - name: "Restart FRR"
+    service:
+      name: frr
+      state: restarted
+      enabled: true
+    tags:
+      - frr_conf
+
