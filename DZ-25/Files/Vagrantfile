@@ -1,0 +1,120 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_SERVER_URL'] = 'https://elab.pro'
+
+MACHINES = {
+  :Server01 => {
+        :box_name => "bento/ubuntu-24.04",
+        :net => [
+                   {adapter: 2, virtualbox__intnet: "office", auto_config: false},
+                ],
+		:vlan_id => 10, :ip => "10.0.10.1/16"
+  },
+
+  :Server02 => {
+        :box_name => "bento/ubuntu-24.04",
+        :net => [
+                   {adapter: 2, virtualbox__intnet: "office", auto_config: false},
+                ],
+		:vlan_id => 20, :ip => "10.0.20.1/16"
+  },
+  
+  :Client01 => {
+        :box_name => "bento/ubuntu-24.04",
+        :net => [
+                   {adapter: 2, virtualbox__intnet: "office", auto_config: false},
+                ],
+		:vlan_id => 10, :ip => "10.0.10.10/16"
+  },
+
+  :Client02 => {
+        :box_name => "bento/ubuntu-24.04",
+        :net => [
+                   {adapter: 2, virtualbox__intnet: "office", auto_config: false},
+                ],
+		:vlan_id => 20, :ip => "10.0.20.10/16"
+  },
+
+  :OfficeRouter => {
+        :box_name => "bento/ubuntu-24.04",
+        :net => [
+                   {adapter: 2, virtualbox__intnet: "office", auto_config: false},
+                   {ip: '192.168.255.10', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "central"},
+                ]
+  },
+
+  :CentralRouter => {
+        :box_name => "bento/ubuntu-24.04",
+        :net => [
+                   {adapter: 2, virtualbox__intnet: "bond_ch1", auto_config: false},
+                   {adapter: 3, virtualbox__intnet: "bond_ch2", auto_config: false},
+                   {ip: '192.168.255.9', adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "central"},
+                ],
+                :ip => "192.168.255.2/30", :neighbour_ip => "192.168.255.1"
+  },
+
+  :INetRouter => {
+        :box_name => "bento/ubuntu-24.04",
+        :net => [
+                   {adapter: 2, virtualbox__intnet: "bond_ch1", auto_config: false},
+                   {adapter: 3, virtualbox__intnet: "bond_ch2", auto_config: false},
+                ],
+                :ip => "192.168.255.1/30", :neighbour_ip => "192.168.255.2"
+  },
+
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.host_name = boxname.to_s
+
+	box.vm.provider "virtualbox" do |vb|
+          vb.name = boxname.to_s
+          bonding_routers = ["INetRouter", "CentralRouter"]
+          if bonding_routers.include?(boxname.to_s)
+            vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
+            vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
+          end
+        end
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", **ipconf
+        end
+
+	target_servers = ["Server01", "Client01", "Server02", "Client02"]
+        if target_servers.include?(boxname.to_s)
+          box.vm.provision "ansible_local" do |ansible|
+            ansible.playbook = "Provisioning/office.yml"
+			ansible.extra_vars = {
+               vlan_id: boxconfig[:vlan_id],
+               vlan_ip: boxconfig[:ip]
+            }
+	  end
+        end
+
+	target_servers = ["OfficeRouter"]
+        if target_servers.include?(boxname.to_s)
+          box.vm.provision "ansible_local" do |ansible|
+            ansible.playbook = "Provisioning/office-router.yml"
+	  end
+        end
+
+	target_servers = ["INetRouter", "CentralRouter"]
+        if target_servers.include?(boxname.to_s)
+          box.vm.provision "ansible_local" do |ansible|
+            ansible.playbook = "Provisioning/bonding.yml"
+			ansible.extra_vars = {
+               bond_ip: boxconfig[:ip],
+               neighbour_ip: boxconfig[:neighbour_ip]
+            }
+	  end
+        end
+    end
+  end
+end

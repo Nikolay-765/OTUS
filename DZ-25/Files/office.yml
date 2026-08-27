@@ -1,0 +1,43 @@
+---
+- name: MAIN | Office PC configuration
+  hosts: all
+  gather_facts: yes
+  become: yes
+  
+  tasks:
+  - name: "Software installation"
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: present
+      update_cache: true
+    vars:
+      packages:
+      - traceroute
+      - tcpdump
+      - net-tools
+    tags:
+      - software_installation
+
+  - name: Make Netplan configuration file
+    copy:
+      dest: /etc/netplan/60-vlan-config.yaml
+      content: |
+        network:
+          version: 2
+          ethernets:
+            eth1:
+              dhcp4: false
+          vlans:
+            vlan{{ vlan_id }}:
+              id: {{ vlan_id }}
+              link: eth1
+              addresses:
+                - {{ vlan_ip }}
+      mode: '0600'
+    tags:
+      - adapter_config
+
+  - name: Apply config
+    command: netplan apply
+    tags:
+      - adapter_config
