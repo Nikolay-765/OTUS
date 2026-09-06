@@ -1,0 +1,62 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    ipa_dns: "192.168.60.10"
+    ipa_admin_password: "1234rewq"
+
+  tasks:
+  - name: "Software installation"
+    ansible.builtin.dnf:
+      name: "{{ packages }}"
+      state: present
+      update_cache: true
+    vars:
+      packages:
+      - net-tools
+      - ipa-client
+      - samba-client
+      - firewalld
+
+  - name: Ensure firewalld is running
+    ansible.builtin.systemd:
+      name: firewalld
+      state: started
+      enabled: yes
+
+  - name: "Сonfigure firewalld"
+    ansible.builtin.shell:
+      cmd: |
+        firewall-cmd --permanent --new-zone=domain
+        firewall-cmd --reload
+        firewall-cmd --permanent --zone=domain --add-service=freeipa-client
+        firewall-cmd --permanent --zone=domain --add-service=samba-client
+        firewall-cmd --permanent --zone=domain --add-service=ssh
+        firewall-cmd --permanent --zone=domain --set-target=DROP
+        firewall-cmd --reload
+
+  - name: "Set timezone to Europe/Moscow"
+    ansible.builtin.timezone:
+      name: Europe/Moscow
+
+  - name: Make DNS config
+    ansible.builtin.copy:
+      dest: /etc/NetworkManager/conf.d/ipa-dns.conf
+      content: |
+        [global-dns-domain-*]
+        servers=192.168.60.10
+      mode: '0644'
+    register: dns_config
+
+  - name: Restart NetworkManager
+    ansible.builtin.systemd_service:
+      name: NetworkManager
+      state: restarted
+    when: dns_config.changed
+
+  - name: "Add VM to domain"
+    ansible.builtin.shell:
+      cmd: |
+        echo '{{ ipa_admin_password }}' | kinit admin
+        echo -e "yes\nyes" | ipa-client-install --mkhomedir --domain=TEST.LOCAL --server=ipa.test.local --no-ntp -p admin -w '{{ ipa_admin_password }}'
+    ignore_errors: true

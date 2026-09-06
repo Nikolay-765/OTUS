@@ -1,0 +1,162 @@
+---
+- hosts: all
+  become: yes
+  
+  environment:
+    KRB5CCNAME: "FILE:/tmp/krb5cc_ansible_share"
+
+  vars:
+    ipa_ip: "192.168.60.10"
+    ipa_domain: "test.local"
+    ipa_realm: "TEST.LOCAL"
+    ipa_netbios_name: "TEST"  
+    ipa_admin_password: "1234rewq"
+    ipa_ds_password: "asdfvcxz"
+    upstream_dns1: "1.1.1.1"
+    upstream_dns2: "8.8.8.8"
+    share_name: "mega_share"
+    share_path: "/srv/samba/share"
+    share_group: "shareusers"
+
+  tasks:
+  - name: "Set timezone to Europe/Moscow"
+    ansible.builtin.timezone:
+      name: Europe/Moscow
+
+  - name: "Software installation"
+    ansible.builtin.dnf:
+      name: "{{ packages }}"
+      state: present
+      update_cache: true
+    vars:
+      packages:
+      - ipa-server
+      - ipa-server-dns
+      - ipa-server-trust-ad
+      - samba
+      - samba-client
+      - firewalld
+
+  - name: Ensure firewalld is running
+    ansible.builtin.systemd:
+      name: firewalld
+      state: started
+      enabled: yes
+
+  - name: "Сonfigure firewalld"
+    ansible.builtin.shell:
+      cmd: |
+        firewall-cmd --permanent --new-zone=domain
+        firewall-cmd --reload
+        firewall-cmd --permanent --zone=domain --add-service=freeipa-4
+        firewall-cmd --permanent --zone=domain --add-service=dns
+        firewall-cmd --permanent --zone=domain --add-service=ntp
+        firewall-cmd --permanent --zone=domain --add-service=ssh
+        firewall-cmd --permanent --zone=domain --add-service=samba
+        firewall-cmd --permanent --zone=domain --set-target=DROP
+        firewall-cmd --permanent --zone=domain --add-interface=eth1
+        firewall-cmd --reload
+
+  - name: "Install and configure FreeIPA Server"
+    ansible.builtin.command:
+      cmd: >
+        ipa-server-install -U
+        -r '{{ ipa_realm }}'
+        -n '{{ ipa_domain }}'
+        --ip-address='{{ ipa_ip }}'
+        -p '{{ ipa_ds_password }}'
+        -a '{{ ipa_admin_password }}'
+        --setup-dns
+        --forwarder='{{ upstream_dns1 }}'
+        --forwarder='{{ upstream_dns2 }}'
+        --no-reverse
+        --no-host-dns
+    args:
+      creates: /etc/ipa/default.conf
+
+  - name: "Disable DNSSEC validation"
+    ansible.builtin.shell:
+      cmd: |
+        echo "dnssec-validation no;" | tee /etc/named/ipa-options-ext.conf
+
+  - name: "Create group for share in FreeIPA"
+    ansible.builtin.shell:
+      cmd: |
+        echo '{{ ipa_admin_password }}' | kinit admin
+        ipa group-show '{{ share_group }}' || ipa group-add '{{ share_group }}' --desc="Group for Samba share access"
+
+  - name: "Run ipa-adtrust-install to configure Samba backend on FreeIPA Server"
+    ansible.builtin.command:
+      cmd: >
+        ipa-adtrust-install -U
+        -a '{{ ipa_admin_password }}'
+        --netbios-name='{{ ipa_netbios_name }}'
+        --add-sids
+    args:
+      creates: /etc/samba/smb.conf.ipa
+
+  - name: "Make directory for Samba share"
+    ansible.builtin.file:
+      path: "{{ share_path }}"
+      state: directory
+      mode: '0770' 
+      owner: root
+      group: "{{ share_group }}"
+
+  - name: "Configuration /etc/samba/smb.conf"
+    ansible.builtin.blockinfile:
+      path: /etc/samba/smb.conf
+      marker: "# {mark} ANSIBLE MANAGED SHARE #"
+      block: |
+        [{{ share_name }}]
+           comment = FreeIPA Shared Folder
+           path = {{ share_path }}
+           writable = yes
+           browseable = yes
+           valid users = +{{ share_group }}
+           create mask = 0660
+           directory mask = 0770
+           vfs objects = acl_xattr
+    notify: Restart Samba services
+
+  - name: "Start and enable Samba and Winbind services"
+    ansible.builtin.service:
+      name: "{{ item }}"
+      state: started
+      enabled: yes
+    loop:
+      - smb
+      - winbind
+
+  - name: "Create user2"
+    vars:
+      user: "user1"
+      password: "12345678"
+    ansible.builtin.shell:
+      cmd: |
+        echo '{{ password }}' | ipa user-add '{{ user }}' --first='{{ user }}' --last='{{ user }}' --password
+        ipa group-add-member '{{ share_group }}' --users='{{ user }}'
+    ignore_errors: true
+
+  - name: "Create user2"
+    vars:
+      user: "user2"
+      password: "12345678"
+    ansible.builtin.shell:
+      cmd: |
+        echo '{{ password }}' | ipa user-add '{{ user }}' --first='{{ user }}' --last='{{ user }}' --password
+        ipa group-add-member '{{ share_group }}' --users='{{ user }}'
+    ignore_errors: true
+
+  - name: "Destroy Kerberos ticket after finish configuration"
+    shell: "kdestroy"
+    failed_when: false
+
+  handlers:
+    - name: Restart Samba services
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - smb
+        - winbind

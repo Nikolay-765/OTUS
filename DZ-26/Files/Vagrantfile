@@ -1,0 +1,76 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_SERVER_URL'] = 'https://vagrant.elab.pro'
+
+MACHINES = {
+  :IPA => {
+        :box_name => "almalinux/9",
+        :host_name => "ipa.test.local",
+        :playbook => "Provisioning/ipa.yml",
+        :memory => 4096,
+        :cpu => 2,
+        :net => [
+                   {ip: '192.168.60.10', adapter: 2, netmask: "255.255.255.0", virtualbox__hostonly_name: "vboxnet0"},
+                ]
+  },
+
+  :Client01 => {
+        :box_name => "almalinux/9",
+        :host_name => "client01.test.local",
+        :playbook => "Provisioning/client.yml",
+        :memory => 2048,
+        :cpu => 2,
+        :net => [
+                   {ip: '192.168.60.21', adapter: 2, netmask: "255.255.255.0", virtualbox__hostonly_name: "vboxnet0"},
+                ]
+  },
+  
+  :Client02 => {
+        :box_name => "almalinux/9",
+        :host_name => "client02.test.local",
+        :playbook => "Provisioning/client.yml",
+        :memory => 2048,
+        :cpu => 2,
+        :net => [
+                   {ip: '192.168.60.22', adapter: 2, netmask: "255.255.255.0", virtualbox__hostonly_name: "vboxnet0"},
+                ]
+  },
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.host_name = boxconfig[:host_name]
+
+	box.vm.provider "virtualbox" do |vb|
+          vb.name = boxname.to_s
+          vb.memory = boxconfig[:memory]
+          vb.cpus = boxconfig[:cpu] 
+        end
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", **ipconf
+        end
+
+        box.vm.provision "ansible" do |ansible|
+          ansible.playbook = boxconfig[:playbook]
+          ansible.become = true 
+        end
+
+# Костыль для vagrant, что бы после перезагрузки привязать eth1 к зоне domain
+        target_servers = ["IPA", "Client01", "Client02"]
+        if target_servers.include?(boxname.to_s)
+          box.vm.provision "shell", run: "always", inline: <<-SHELL
+            firewall-cmd --permanent --zone=domain --add-interface=eth1
+            firewall-cmd --reload
+          SHELL
+        end
+
+    end
+  end
+end
